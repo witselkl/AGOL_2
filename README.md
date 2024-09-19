@@ -1,2 +1,2 @@
 # Geog576_lab
-lab1
+lab2
