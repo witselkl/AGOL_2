@@ -57,10 +57,24 @@
     width: 1
     }  
   };  
+
+  //defining popup style
+  const popupTemplate = {
+    title: "{Name}",
+    content: "{Description}"
+ }
+ const attributes = {
+    Name: "WW2 PIL Box",
+    Description: "A popular hiking destination providing 360 degree view of the Kailua Bay."
+ }
 //creating the point
 const pointGraphic = new Graphic({  
   geometry: point,  
-  symbol: simpleMarkerSymbol  
+  symbol: simpleMarkerSymbol,
+
+  //popup properties
+  attributes: attributes,
+popupTemplate: popupTemplate
 });
 
 //adding the point to the graphics layer
