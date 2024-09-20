@@ -90,20 +90,18 @@ const popupLandCover = {
   "title": "LandCover",
   "content": "<b>Name:</b> {Name}<br><b>Category:</b> {Category}<br>"
 }
+//adding the Const for the feature layer
+const landLayer = new FeatureLayer({
+url: "https://landscape10.arcgis.com/arcgis/rest/services/Hawaii_CCAP_Land_Cover/ImageServer",
 
 //adding the popup here
 outFields: ["Name","Category"],
-popupTemplate: popupTemplate
+popupTemplate: popupLandCover
  });
 
 //adding the feature layer to the map
-map.add(popupLandCover);
+map.add(landLayer);
 
-const LandCover = new FeatureLayer({
-url: "https://landscape10.arcgis.com/arcgis/rest/services/Hawaii_CCAP_Land_Cover/ImageServer"
-});
-
-map.add(usaeduLayer);
 
 
      // Locate Button
