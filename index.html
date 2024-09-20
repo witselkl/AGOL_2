@@ -20,9 +20,13 @@
   "esri/Basemap", 
   //adding in module for the graphics and graphics layer
   "esri/Graphic",  
-  "esri/layers/GraphicsLayer"
+  "esri/layers/GraphicsLayer",
 
- ], function (esriConfig, Map, MapView, Locate, Search, BasemapGallery, Basemap, Graphic, GraphicsLayer) {   
+  //adding in the module for the feature layers
+   "esri/layers/FeatureLayer"
+
+
+ ], function (esriConfig, Map, MapView, Locate, Search, BasemapGallery, Basemap, Graphic, GraphicsLayer, FeatureLayer) {   
   
 
   esriConfig.apiKey = "AAPTxy8BH1VEsoebNVZXo8HurLnZ1SKuVjcmhuYy7ZgFo7nRkeaex5Pyse90hA3_-twQ9aZh3ukW7y7j9oxVbinOUkZTkuP5jIlAEtH5e_7DHP0liWf6tn6QTxetcFnI3rIi0xPzkoaEPekxL0-rDUwsAdMQRuux-0uuNMTE7e_lNeG45pvgeuCSr5abahKFzvuUJ-ewQsq9pGAJYlLcwozKzYElZv8h7OlHzgxN1NcRAiWme1AEaa5tzqVZug9kV8C5AT1_64sbOrZQ";
@@ -80,6 +84,12 @@ popupTemplate: popupTemplate
 
 //adding the point to the graphics layer
 graphicsLayer.add(pointGraphic);
+
+
+const usaeduLayer = new FeatureLayer({
+url: "https://www.arcgis.com/apps/dashboards/84ba9c03786e462d960e3172bc1b2204"
+});
+map.add(usaeduLayer);
 
 
      // Locate Button
