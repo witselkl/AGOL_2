@@ -95,6 +95,7 @@ const popupSchool = {
 const SchoolLayer = new FeatureLayer({
 url: "https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/HIFLD_Public_Schools_Placekey/FeatureServer",
 
+
 //adding the popup here
 outFields: ["Name","Population"],
 popupTemplate: popupSchool
@@ -108,19 +109,30 @@ const popupAirport = {
   "title": "Airport",
   "content": "<b>Name:</b> {Fac_Name}<br>"
 }
+//adding the popup here
+outFields: ["Fac_Name"],
+popupTemplate: popupAirport
+});
+
+//setting up the icon
+const airportRenderer = {
+"type": "simple",
+"symbol": {
+  "type": "picture-marker",
+  "url": "https://github.com/witselkl/AGOL_2/blob/main/local_airport_24dp_5F6368.png",
+  "width": "18px",
+  "height": "18px"
+  }
+}
 
  //adding the Const for the airport feature layer
 const AirportLayer = new FeatureLayer({
 url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/US_AirportsGeog576/FeatureServer",
-
-//adding the popup here
-outFields: ["Fac_Name"],
-popupTemplate: popupAirport
- });
+renderer: airportRenderer
+});
 
 //adding the feature layer to the map
 map.add(AirportLayer);
-
 
 
      // Locate Button
