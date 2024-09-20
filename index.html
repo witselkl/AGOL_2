@@ -85,10 +85,24 @@ popupTemplate: popupTemplate
 //adding the point to the graphics layer
 graphicsLayer.add(pointGraphic);
 
+// Define a pop-up for usaeduLayer
+const popupLandCover = {
+  "title": "LandCover",
+  "content": "<b>Name:</b> {Name}<br><b>Category:</b> {Category}<br>"
+}
 
-const usaeduLayer = new FeatureLayer({
+//adding the popup here
+outFields: ["Name","Category"],
+popupTemplate; popupLandCover
+ });
+
+//adding the feature layer to the map
+map.add(popupLandCover);
+
+const LandCover = new FeatureLayer({
 url: "https://landscape10.arcgis.com/arcgis/rest/services/Hawaii_CCAP_Land_Cover/ImageServer"
 });
+
 map.add(usaeduLayer);
 
 
