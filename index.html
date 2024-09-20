@@ -85,12 +85,13 @@ popupTemplate: popupTemplate
 //adding the point to the graphics layer
 graphicsLayer.add(pointGraphic);
 
-// Define a pop-up for usaeduLayer
+// Define a pop-up for SchoolLayer
 const popupSchool = {
   "title": "School",
   "content": "<b>Name:</b> {NAME}<br><b>City:</b> {CITY}<br> <b>Population:</b> {POPULATION}<br>"
 }
-//adding the Const for the feature layer
+
+//adding the Const for the school feature layer
 const SchoolLayer = new FeatureLayer({
 url: "https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/HIFLD_Public_Schools_Placekey/FeatureServer",
 
@@ -99,8 +100,26 @@ outFields: ["Name","Population"],
 popupTemplate: popupSchool
  });
 
-//adding the feature layer to the map
+ //adding the feature layer to the map
 map.add(SchoolLayer);
+
+ //Define a pop-up for AirportLayer
+const popupAirport = {
+  "title": "Airport",
+  "content": "<b>Name:</b> {Fac_Name}<br>"
+}
+
+ //adding the Const for the airport feature layer
+const AirportLayer = new FeatureLayer({
+url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/US_AirportsGeog576/FeatureServer",
+
+//adding the popup here
+outFields: ["Fac_Name"],
+popupTemplate: popupAirport
+ });
+
+//adding the feature layer to the map
+map.add(AirportLayer);
 
 
 
