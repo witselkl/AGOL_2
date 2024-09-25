@@ -1,142 +1,121 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Hello, AGOL</title>
+  <title>Hello, AGOL!</title>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="description" content="" />
 
-  <link rel="stylesheet" href="https://js.arcgis.com/4.25/esri/themes/light/main.css">
-  <script src="https://js.arcgis.com/4.25/"></script>
+  <link rel="stylesheet" href="https://js.arcgis.com/4.30/esri/themes/light/main.css">
+  <script src="https://js.arcgis.com/4.30/"></script>
 
-<script>  
-  require([
-  "esri/config", 
-  "esri/Map", 
-  "esri/views/MapView",
-  "esri/widgets/Locate", 
-  "esri/widgets/Search", 
-  "esri/widgets/BasemapGallery",
-  "esri/Basemap", 
-  //adding in module for the graphics and graphics layer
-  "esri/Graphic",  
-  "esri/layers/GraphicsLayer",
+  <script>  
+    require([
+      "esri/config",
+      "esri/Map",
+      "esri/views/MapView",
+      "esri/Graphic",
+      "esri/layers/GraphicsLayer",
+      "esri/layers/FeatureLayer",
+      "esri/widgets/BasemapGallery",
+      "esri/widgets/Expand",
+      "esri/widgets/Locate",
+      "esri/widgets/Search"
+    ], function(esriConfig, Map, MapView, Graphic, GraphicsLayer, FeatureLayer, BasemapGallery, Expand, Locate, Search) {
+      esriConfig.apiKey = "AAPTxy8BH1VEsoebNVZXo8HurLnZ1SKuVjcmhuYy7ZgFo7nRkeaex5Pyse90hA3_-twQ9aZh3ukW7y7j9oxVbinOUkZTkuP5jIlAEtH5e_7DHP0liWf6tn6QTxetcFnI3rIi0xPzkoaEPekxL0-rDUwsAdMQRuux-0uuNMTE7e_lNeG45pvgeuCSr5abahKFzvuUJ-ewQsq9pGAJYlLcwozKzYElZv8h7OlHzgxN1NcRAiWme1AEaa5tzqVZug9kV8C5AT1_64sbOrZQ";
+      
+      const map = new Map({
+        basemap: "arcgis-topographic"
+      });
 
-  //adding in the module for the feature layers
-   "esri/layers/FeatureLayer"
+      const view = new MapView({
+        container: "viewDiv",
+        map: map,
+        center: [-157.7405, 21.4024],
+        zoom: 13
+      });
 
-
- ], function (esriConfig, Map, MapView, Locate, Search, BasemapGallery, Basemap, Graphic, GraphicsLayer, FeatureLayer) {   
-  
-
-  esriConfig.apiKey = "AAPTxy8BH1VEsoebNVZXo8HurLnZ1SKuVjcmhuYy7ZgFo7nRkeaex5Pyse90hA3_-twQ9aZh3ukW7y7j9oxVbinOUkZTkuP5jIlAEtH5e_7DHP0liWf6tn6QTxetcFnI3rIi0xPzkoaEPekxL0-rDUwsAdMQRuux-0uuNMTE7e_lNeG45pvgeuCSr5abahKFzvuUJ-ewQsq9pGAJYlLcwozKzYElZv8h7OlHzgxN1NcRAiWme1AEaa5tzqVZug9kV8C5AT1_64sbOrZQ";
-  const map = new Map({ 
-      basemap: "arcgis-topographic" // Basemap layer service 
-    });
- 
-    const view = new MapView({
-      map: map,
-      center: [-157.7405, 21.4024], // Longitude, latitude
-      zoom: 13, // Zoom level
-      container: "viewDiv" // Div element
-     }); 
-
-     //adding construction to the graphics layer
-     const graphicsLayer = new GraphicsLayer();  
+      const graphicsLayer = new GraphicsLayer();  
       map.add(graphicsLayer);
 
-     //construct a point
-     const point = { //Create a point  
-      type: "point",  
-      longitude: -157.7410761,    //long lat of Pill box. Location of WW2 bunkers. Hiking
-      latitude: 21.390015
-    };
+      const point = { 
+        type: "point",  
+        longitude: -157.7410761,    
+        latitude: 21.390015
+      };
 
-    // defining marker style
       const simpleMarkerSymbol = {  
-    type: "simple-marker", 
-    style: "triangle", 
-    color: [139, 0, 0],  // Color red
-    outline: {  
-    color: [255, 255, 255], // White  
-    width: 1
-    }  
-  };  
+        type: "simple-marker",
+        style: "triangle", 
+        color: [139, 0, 0],  
+        outline: {  
+          color: [255, 255, 255], 
+          width: 1
+        }  
+      };
 
-  //defining popup style
-  const popupTemplate = {
-    title: "{Name}",
-    content: "{Description}"
- }
- const attributes = {
-    Name: "WW2 PIL Box",
-    Description: "A popular hiking destination providing 360 degree view of the Kailua Bay."
- }
-//creating the point
-const pointGraphic = new Graphic({  
-  geometry: point,  
-  symbol: simpleMarkerSymbol,
+      const popupTemplate = {
+        title: "{Name}",
+        content: "{Description}"
+      };
 
-  //popup properties
-  attributes: attributes,
-popupTemplate: popupTemplate
-});
+      const attributes = {
+        Name: "WW2 Pill Box",
+        Description: "A popular hiking destination providing 360 degree view of the Kailua Bay."
+      };
 
-//adding the point to the graphics layer
-graphicsLayer.add(pointGraphic);
+      const pointGraphic = new Graphic({  
+        geometry: point,  
+        symbol: simpleMarkerSymbol,
+        attributes: attributes,
+        popupTemplate: popupTemplate  
+      });
 
-// Define a pop-up for SchoolLayer
-const popupSchool = {
-  "title": "School",
-  "content": "<b>Name:</b> {NAME}<br><b>City:</b> {CITY}<br> <b>Population:</b> {POPULATION}<br>"
-}
+      graphicsLayer.add(pointGraphic);
 
-//adding the Const for the school feature layer
-const SchoolLayer = new FeatureLayer({
-url: "https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/HIFLD_Public_Schools_Placekey/FeatureServer",
+      // Define a pop-up for SchoolLayer
+      const popupSchool = {
+        title: "School",
+        content: "<b>Name:</b> {NAME}<br><b>City:</b> {CITY}<br> <b>Population:</b> {POPULATION}<br>"
+      };
 
+      // Adding the School feature layer
+      const SchoolLayer = new FeatureLayer({
+        url: "https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/HIFLD_Public_Schools_Placekey/FeatureServer",
+        outFields: ["NAME", "CITY", "POPULATION"],
+        popupTemplate: popupSchool
+      });
 
-//adding the popup here
-outFields: ["Name","Population"],
-popupTemplate: popupSchool
- });
+      map.add(SchoolLayer);
 
- //adding the feature layer to the map
-map.add(SchoolLayer);
+      // Define a pop-up for the AirportLayer
+      const popupAirport = {
+        title: "Airport",
+        content: "<b>Name:</b> {Fac_Name}<br>"
+      };
 
- //Define a pop-up for AirportLayer
-const popupAirport = {
-  "title": "Airport",
-  "content": "<b>Name:</b> {Fac_Name}<br>"
-}
-//adding the popup here
-outFields: ["Fac_Name"],
-popupTemplate: popupAirport
-});
+      // Setting up the icon for Airports
+      const airportRenderer = {
+        type: "simple",
+        symbol: {
+          type: "picture-marker",
+          url: "local_airport_24dp_5F6368.png",  // Use relative path
+          width: "18px",
+          height: "18px"
+        }
+      };
 
-//setting up the icon
-const airportRenderer = {
-"type": "simple",
-"symbol": {
-  "type": "picture-marker",
-  "url": "https://github.com/witselkl/AGOL_2/blob/main/local_airport_24dp_5F6368.png",
-  "width": "18px",
-  "height": "18px"
-  }
-}
+      const AirportLayer = new FeatureLayer({
+        url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/US_AirportsGeog576/FeatureServer",
+        renderer: airportRenderer,
+        outFields: ["Fac_Name"],
+        popupTemplate: popupAirport
+      });
 
- //adding the Const for the airport feature layer
-const AirportLayer = new FeatureLayer({
-url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/US_AirportsGeog576/FeatureServer",
-renderer: airportRenderer
-});
+      map.add(AirportLayer);
 
-//adding the feature layer to the map
-map.add(AirportLayer);
-
-
-     // Locate Button
-     const locateBtn = new Locate({
+      // Locate Button
+      const locateBtn = new Locate({
         view: view
       });
       view.ui.add(locateBtn, "top-left");
@@ -151,40 +130,42 @@ map.add(AirportLayer);
       // Basemap Gallery
       const basemapGallery = new BasemapGallery({
         view: view,
-        source: [
-          Basemap.fromId("streets"),
-          Basemap.fromId("satellite"),
-          Basemap.fromId("hybrid"),
-          Basemap.fromId("topo"),
-          Basemap.fromId("gray"),
-          Basemap.fromId("dark-gray"),
-          Basemap.fromId("oceans"),
-          Basemap.fromId("national-geographic"),
-          Basemap.fromId("terrain"),
-          Basemap.fromId("osm")
-        ]
+        // source: [
+        //   Basemap.fromId("streets"),
+        //   Basemap.fromId("satellite"),
+        //   Basemap.fromId("hybrid"),
+        //   Basemap.fromId("topo"),
+        //   Basemap.fromId("gray"),
+        //   Basemap.fromId("dark-gray"),
+        //   Basemap.fromId("oceans"),
+        //   Basemap.fromId("national-geographic"),
+        //   Basemap.fromId("terrain"),
+        //   Basemap.fromId("osm")
+        // ]
       });
-      view.ui.add(basemapGallery, "top-right");
+
+      const basemapGalleryExpand = new Expand({
+        view: view,
+        content: basemapGallery,
+        expandIconClass: "esri-icon-basemap" // Optional, defaults to "esri-icon-expand"
+      });
+
+      view.ui.add(basemapGalleryExpand, "top-right");
     }); 
-</script>
+  </script>
 
-<style>  
-  html,  
-  body,  
-  #viewDiv {  
-    padding: 0;
-    margin: 0;  
-    height: 100%;  
-    width: 100%;  
-  }  
-</style> 
-
-
+  <style>  
+    html,  
+    body,  
+    #viewDiv {  
+      padding: 0;
+      margin: 0;  
+      height: 100%;  
+      width: 100%;  
+    }  
+  </style> 
 </head>
 <body>
-
-  <!--<h1>Hello, world! I am using Git to push!</h1> -->
   <div id="viewDiv"></div>
-
 </body>
 </html>
