@@ -85,6 +85,14 @@ popupTemplate: popupTemplate
 //adding the point to the graphics layer
 graphicsLayer.add(pointGraphic);
 
+
+
+
+
+
+
+
+
 // Define a pop-up for SchoolLayer
 const popupSchool = {
   "title": "School",
@@ -112,7 +120,8 @@ const popupAirport = {
 //adding the popup here
 outFields: ["Fac_Name"],
 popupTemplate: popupAirport
-});
+ 
+ });
 
 //setting up the icon
 const airportRenderer = {
@@ -131,9 +140,11 @@ url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/US_Airpo
 renderer: airportRenderer
 });
 
+
 //adding the feature layer to the map
 map.add(AirportLayer);
 
+});
 
      // Locate Button
      const locateBtn = new Locate({
@@ -163,6 +174,7 @@ map.add(AirportLayer);
           Basemap.fromId("terrain"),
           Basemap.fromId("osm")
         ]
+
       });
       view.ui.add(basemapGallery, "top-right");
     }); 
